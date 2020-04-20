@@ -31,12 +31,12 @@ public class CharacterA : MonoBehaviour
     public float Distance = 0; // 子弹间的间隔
     int LimitI = 0;
 
-    //BaseGameObjectPool m_bullet1_pool;
+    BasePool m_bullet1_pool;
     GameObject m_BulletPrefab;
     void Start()
     {
-        m_BulletPrefab = Resources.Load<GameObject>("Prefabs/ReimuBulletA");
-        //m_bullet1_pool = GameObjectPoolManager.Instance.CreatGameObjectPool<BaseGameObjectPool>("Player");
+        m_BulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet");
+        m_bullet1_pool = GameObjectPoolManager.Instance.CreatGameObjectPool<BasePool>("Prefabs/Bullet");
         //m_bullet1_pool.prefab = m_BulletPrefab;
         CC = GetComponent<CharacterController>();
         //animator = GetComponent<Animator>();
@@ -104,13 +104,14 @@ public class CharacterA : MonoBehaviour
         SetRotation(realPosition);
         if (i < 30)
             return;
-        //BulletData shoot = new BulletData();
-        //shoot.SetValue(hitPoint, transform.rotation, Count, LifeTime, BulletSpeed, Angle, Distance);
-        //if (LimitI > CdTime * 50)
-        //{
-        //    BulletManager.Instance.ShootConfig(shoot, m_bullet1_pool);
-        //    LimitI = 0;
-        //}
+        BulletModel bulletModel = new BulletModel();
+        bulletModel.Set(hitPoint, transform.rotation); // , Count, LifeTime, BulletSpeed, Angle, Distance
+
+        if (LimitI > CdTime * 50)
+        {
+            BulletManager.Instance.DoShoot(bulletModel, m_bullet1_pool);
+            LimitI = 0;
+        }
     }
 
     Quaternion faceToQuat;
