@@ -31,12 +31,12 @@ public class CharacterA : MonoBehaviour
     public float Distance = 0; // 子弹间的间隔
     int LimitI = 0;
 
-    BasePool m_bullet1_pool;
-    GameObject m_BulletPrefab;
+    BasePool bulletPool;
+    GameObject bulletPrefab;
     void Start()
     {
-        m_BulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet");
-        m_bullet1_pool = GameObjectPoolManager.Instance.CreatGameObjectPool<BasePool>("Prefabs/Bullet");
+        bulletPrefab = Resources.Load<GameObject>("Prefabs/Bullet");
+        bulletPool = GameObjectPoolManager.Instance.CreatGameObjectPool<BasePool>("Prefabs/Bullet", bulletPrefab);
         //m_bullet1_pool.prefab = m_BulletPrefab;
         CC = GetComponent<CharacterController>();
         //animator = GetComponent<Animator>();
@@ -47,7 +47,7 @@ public class CharacterA : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        hitPoint = transform.position + transform.up * 0.43f + transform.forward * 1.2f;
+        hitPoint = transform.position;// + transform.up * 0.43f + transform.forward * 1.2f;
     }
 
     private void FixedUpdate()
@@ -101,32 +101,37 @@ public class CharacterA : MonoBehaviour
         var point = GetPoint(ray.GetPoint(0), ray.direction, Vector3.up, new Vector3(0, hitPoint.y, 0));
         realPosition = new Vector3(point.x, transform.position.y, point.z);
         isShoot = true;
-        SetRotation(realPosition);
+        //SetRotation(realPosition);
         if (i < 30)
             return;
-        BulletModel bulletModel = new BulletModel();
+        BulletModel bulletModel = new BulletModel() { Count = 1,Speed = 5 };
         bulletModel.Set(hitPoint, transform.rotation); // , Count, LifeTime, BulletSpeed, Angle, Distance
 
         if (LimitI > CdTime * 50)
         {
-            BulletManager.Instance.DoShoot(bulletModel, m_bullet1_pool);
+            BulletManager.Instance.DoShoot(bulletModel, bulletPool);
             LimitI = 0;
         }
     }
 
     Quaternion faceToQuat;
-    void SetRotation(Vector3 v)//射击时传入的是鼠标点击的位置，不射击时传入的为移动的方向
+    /// <summary>
+    /// 旋转player
+    /// </summary>
+    /// <param name="v"></param>
+    void SetRotation(Vector3 v)
     {
         if (isShoot)
         {
-            faceToQuat = Quaternion.LookRotation(v - transform.position);
+            faceToQuat = Quaternion.LookRotation(v - transform.position, Vector3.up);
         }
         else
         {
-            faceToQuat = Quaternion.LookRotation(v);
+            faceToQuat = Quaternion.LookRotation(v, Vector3.up);
         }
-        Quaternion slerp = Quaternion.Slerp(transform.rotation, faceToQuat, TurnSpeed * Time.fixedDeltaTime);
-        transform.rotation = slerp;
+        //faceToQuat.z = 0; // 锁定Z轴，只在 X-Y平面内移动
+        transform.rotation = Quaternion.Slerp(transform.rotation, faceToQuat, TurnSpeed * Time.fixedDeltaTime); //slerp
+        //transform.rotation = Quaternion.AngleAxis(Quaternion.Angle(transform.rotation, faceToQuat), Vector3.forward);
     }
 
     /// <summary>

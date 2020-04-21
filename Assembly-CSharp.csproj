@@ -67,9 +67,14 @@
     <Compile Include="Assets\Scripts\Character\CharacterA.cs" />
     <Compile Include="Assets\Scripts\Character\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Common\BulletModel.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
+    <Compile Include="Assets\Scripts\Enemy\EnemySpell.cs" />
+    <Compile Include="Assets\Scripts\Enemy\YaoJing1.cs" />
+    <Compile Include="Assets\Scripts\EnemyLoader.cs" />
     <Compile Include="Assets\Scripts\GameObjectPool\BasePool.cs" />
     <Compile Include="Assets\Scripts\GameObjectPool\GameObjectPoolManager.cs" />
     <Compile Include="Assets\Scripts\GameObjectPool\InPoolObjectInfo.cs" />
+    <Compile Include="Assets\Scripts\Tool\SingleClass.cs" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>F:/UnityProjects/STG/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

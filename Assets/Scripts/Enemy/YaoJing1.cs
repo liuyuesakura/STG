@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// 子弹移动
+/// 小怪 妖精I
 /// </summary>
-public class BulletMove : MonoBehaviour
+public class YaoJing1 : MonoBehaviour
 {
+    bool IsAwake = false;
+
+    AnimationCurve curve;
     /// <summary>
-    /// 子弹速度
+    /// awake位置应当在屏幕外
     /// </summary>
-    public float BulletSpeed;
-    /// <summary>
-    /// 移动延时
-    /// </summary>
-    public float DelayTime;
+    void Awake()
+    {
+        
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -29,7 +31,6 @@ public class BulletMove : MonoBehaviour
 
     void FixedUpdate()
     {
-        Vector3 p = transform.position;
-        transform.position = transform.position + transform.up * BulletSpeed * Time.fixedDeltaTime; // transform.up(0,1,0)
+        
     }
 }

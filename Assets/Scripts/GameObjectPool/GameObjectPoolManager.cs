@@ -2,26 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameObjectPoolManager : MonoBehaviour
+public class GameObjectPoolManager : SingleClass<GameObjectPoolManager>
 {
 
-    public static GameObjectPoolManager Instance;
-
-    private void Awake()
-    {
-        Instance = new GameObjectPoolManager();
-
-        DontDestroyOnLoad(Instance);
-    }
     // Start is called before the first frame update
     /// <summary>
     /// 存放所有的对象池
     /// </summary>
-    Dictionary<string, BasePool> m_poolDic = new Dictionary<string, BasePool>();
+    Dictionary<string, BasePool> poolDic = new Dictionary<string, BasePool>();
     /// <summary>
     /// 对象池在场景中的父控件
     /// </summary>
-    Transform m_parentTrans;
+    Transform parentTrans;
 
     /// <summary>
     /// 创建一个新的对象池
@@ -30,21 +22,22 @@ public class GameObjectPoolManager : MonoBehaviour
     /// <param name="poolName">对象池名称，唯一id</param>
     /// <returns>对象池对象</returns>
     GameObject AllPool;
-    public T CreatGameObjectPool<T>(string poolName) where T : BasePool, new()
+    public T CreatGameObjectPool<T>(string poolName, GameObject prefab) where T : BasePool, new()
     {
-        if (m_poolDic.ContainsKey(poolName))
+        if (poolDic.ContainsKey(poolName))
         {
-            return (T)m_poolDic[poolName];
+            return (T)poolDic[poolName];
         }
         //生成一个新的GameObject存放所有的对象池对象
         if (AllPool == null)
             AllPool = new GameObject("AllPool");
-        m_parentTrans = AllPool.transform;
+        parentTrans = AllPool.transform;
         GameObject obj = new GameObject(poolName);
-        obj.transform.SetParent(m_parentTrans);
+        obj.transform.SetParent(parentTrans);
         T pool = new T();
         pool.Init(poolName, obj.transform);
-        m_poolDic.Add(poolName, pool);
+        pool.prefab = prefab;
+        poolDic.Add(poolName, pool);
         return pool;
     }
 
@@ -57,9 +50,9 @@ public class GameObjectPoolManager : MonoBehaviour
     /// <returns>新对象</returns>
     public GameObject GetGameObject(string poolName, Vector3 position, float lifeTime)
     {
-        if (m_poolDic.ContainsKey(poolName))
+        if (poolDic.ContainsKey(poolName))
         {
-            return m_poolDic[poolName].Get(position, lifeTime);
+            return poolDic[poolName].Get(position, lifeTime);
         }
         return null;
     }
@@ -71,15 +64,15 @@ public class GameObjectPoolManager : MonoBehaviour
     /// <param name="go">对象</param>
     public void RemoveGameObject(string poolName, GameObject go)
     {
-        if (m_poolDic.ContainsKey(poolName))
+        if (poolDic.ContainsKey(poolName))
         {
-            m_poolDic[poolName].Remove(go);
+            poolDic[poolName].Remove(go);
         }
     }
 
     public int GetPoolCount()
     {
-        return m_poolDic.Count;
+        return poolDic.Count;
     }
 
     /// <summary>
@@ -87,7 +80,7 @@ public class GameObjectPoolManager : MonoBehaviour
     /// </summary>
     public void Destroy()
     {
-        m_poolDic.Clear();
-        GameObject.Destroy(m_parentTrans);
+        poolDic.Clear();
+        GameObject.Destroy(parentTrans);
     }
 }

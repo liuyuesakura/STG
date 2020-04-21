@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
+    public AnimationCurve Curve;
+
     CharacterA playerCharacter;
     int i;
     void Start()
@@ -33,16 +35,16 @@ public class PlayerController : MonoBehaviour
         {
             playerCharacter.Speed = playerCharacter.fastSpeed;
         }
-        if (Input.GetButtonDown("Fire1") && i < 15)
+        if (Input.GetButtonDown("CharaterFire") && i < 15)
         {
             playerCharacter.Shoot(i);
         }
-        if (Input.GetButton("Fire1"))
+        if (Input.GetButton("CharaterFire"))
         {
             i++;
             playerCharacter.Shoot(i);
         }
-        if (Input.GetButtonUp("Fire1"))
+        if (Input.GetButtonUp("CharaterFire"))
         {
             i = 0;
             playerCharacter.Shoot(i);

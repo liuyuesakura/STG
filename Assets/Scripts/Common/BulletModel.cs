@@ -52,6 +52,13 @@ public class BulletModel
     public void Set(Vector3 initPostion, Quaternion direction)
     {
         this.InitPosition = initPostion;
-        this.Direction = direction;
+
+        Vector3 eulerAngles = direction.eulerAngles;
+        eulerAngles.x = 0;
+        eulerAngles.y = 0;
+
+        eulerAngles = Vector3.zero; // (0,0,0)不旋转
+
+        this.Direction = Quaternion.Euler(eulerAngles);
     }
 }

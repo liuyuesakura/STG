@@ -5,15 +5,15 @@ using UnityEngine;
 /// <summary>
 /// 发射子弹
 /// </summary>
-public class BulletManager : MonoBehaviour
+public class BulletManager : SingleClass<BulletManager>
 {
 
-    public static BulletManager Instance;
+    //public static BulletManager Instance;
 
-    void Awake()
-    {
-        Instance = this;
-    }
+    //void Awake()
+    //{
+    //    Instance = this;
+    //}
 
     /// <summary>
     /// 发射子弹
