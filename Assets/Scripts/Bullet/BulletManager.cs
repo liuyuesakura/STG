@@ -37,13 +37,13 @@ public class BulletManager : SingleClass<BulletManager>
 
             if (bulletModel.Count % 2 == 1)
             {
-                go.transform.rotation = bulletModel.Direction * Quaternion.Euler(0, bulletModel.Angle * num, 0);
+                go.transform.rotation = bulletModel.Direction * Quaternion.Euler(0, 0, -(bulletModel.Angle * num)); // 绕Z轴旋转 , 要带负号
                 go.transform.position = go.transform.position + go.transform.right * num * bulletModel.Distance;
                 num--;
             }
             else
             {
-                go.transform.rotation = bulletModel.Direction * Quaternion.Euler(0, bulletModel.Angle / 2 + bulletModel.Angle * (num - 1), 0);
+                go.transform.rotation = bulletModel.Direction * Quaternion.Euler(0, 0, -(bulletModel.Angle / 2 + bulletModel.Angle * (num - 1)) ); // 绕Z轴旋转
                 go.transform.position = go.transform.position + go.transform.right * ((num - 1) * bulletModel.Distance + bulletModel.Distance / 2);
                 num--;
             }

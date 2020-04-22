@@ -104,7 +104,7 @@ public class CharacterA : MonoBehaviour
         //SetRotation(realPosition);
         if (i < 30)
             return;
-        BulletModel bulletModel = new BulletModel() { Count = 1,Speed = 5 };
+        BulletModel bulletModel = new BulletModel() { Count = 3,Speed = 5, Angle = 30};
         bulletModel.Set(hitPoint, transform.rotation); // , Count, LifeTime, BulletSpeed, Angle, Distance
 
         if (LimitI > CdTime * 50)

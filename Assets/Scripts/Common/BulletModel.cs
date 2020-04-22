@@ -14,7 +14,7 @@ public class BulletModel
     /// <summary>
     /// 生存时间
     /// </summary>
-    public int LifeTime;
+    public int LifeTime => 3;
     /// <summary>
     /// 颜色
     /// </summary>
@@ -53,12 +53,12 @@ public class BulletModel
     {
         this.InitPosition = initPostion;
 
-        Vector3 eulerAngles = direction.eulerAngles;
-        eulerAngles.x = 0;
-        eulerAngles.y = 0;
+        //Vector3 eulerAngles = direction.eulerAngles;
+        //eulerAngles.x = 0;
+        //eulerAngles.y = 0;
 
-        eulerAngles = Vector3.zero; // (0,0,0)不旋转
+        //eulerAngles = Vector3.zero; // (0,0,0)不旋转
 
-        this.Direction = Quaternion.Euler(eulerAngles);
+        this.Direction = direction;//Quaternion.Euler(eulerAngles);
     }
 }

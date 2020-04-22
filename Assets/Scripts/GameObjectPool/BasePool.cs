@@ -5,6 +5,7 @@ using UnityEngine;
 public class BasePool
 {
 
+    protected int _jiShu = 0;
     /// <summary>
     /// 队列，存放对象池中没有用到的对象，即可分配对象
     /// </summary>
@@ -28,7 +29,7 @@ public class BasePool
     /// <summary>
     /// 默认最大容量
     /// </summary>
-    protected const int m_defaultMaxCount = 10;
+    protected const int m_defaultMaxCount = 5000;
 
     public BasePool()
     {
@@ -83,6 +84,8 @@ public class BasePool
             returnObj = GameObject.Instantiate(m_prefab) as GameObject;
             returnObj.transform.SetParent(m_trans);
             returnObj.SetActive(false);
+            _jiShu++;
+            Debug.Log(_jiShu);
         }
         //使用PrefabInfo脚本保存returnObj的一些信息
         InPoolObjectInfo info = returnObj.GetComponent<InPoolObjectInfo>();
