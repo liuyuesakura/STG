@@ -19,6 +19,19 @@ public class YaoJing1 : MonoBehaviour
     /// </summary>
     int rotateEulerZ = 5;
     /// <summary>
+    /// 小怪如何移动
+    /// </summary>
+    public Vector3 MoveEndPoint = Vector3.zero;
+    /// <summary>
+    /// 移动速度
+    /// </summary>
+    public float MoveSpeed;// = 0.01f; // 优先inspector中的设定，这里的定义是无效的
+
+    /// <summary>
+    /// 
+    /// </summary>
+    public float FireCD;
+    /// <summary>
     /// awake位置应当在屏幕外
     /// </summary>
     void Awake()
@@ -40,12 +53,25 @@ public class YaoJing1 : MonoBehaviour
         
     }
 
+    float _timer;
     void FixedUpdate()
     {
-        bulletModel.Set( this.transform.position, this.transform.rotation);
-        BulletManager.Instance.DoShoot(bulletModel, bulletPool);
+        _timer += Time.fixedDeltaTime;
+        if(_timer >= FireCD)
+        {
+            bulletModel.Set(this.transform.position, this.transform.rotation);
+            BulletManager.Instance.DoShoot(bulletModel, bulletPool);
+            _timer = 0;
+        }
 
         transform.rotation = Quaternion.Slerp(transform.rotation, (transform.rotation * Quaternion.Euler(0 , 0, rotateEulerZ)), 3 * Time.fixedDeltaTime); //slerp
         rotateEulerZ += 5;
+
+        if(MoveEndPoint != Vector3.zero)
+        {
+            Vector3 vector = -(this.transform.position - this.MoveEndPoint) * MoveSpeed * Time.fixedDeltaTime; // 这种方式移动速度会渐慢
+            Debug.Log(vector);
+            this.transform.position += vector;
+        }
     }
 }

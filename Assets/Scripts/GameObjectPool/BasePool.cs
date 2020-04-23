@@ -85,7 +85,7 @@ public class BasePool
             returnObj.transform.SetParent(m_trans);
             returnObj.SetActive(false);
             _jiShu++;
-            Debug.Log(_jiShu);
+            //Debug.Log(_jiShu);
         }
         //使用PrefabInfo脚本保存returnObj的一些信息
         InPoolObjectInfo info = returnObj.GetComponent<InPoolObjectInfo>();
