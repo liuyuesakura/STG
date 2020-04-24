@@ -24,7 +24,7 @@ public class BulletModel
     /// </summary>
     public float Speed;
     /// <summary>
-    /// 移动延时
+    /// 子弹生成到开始移动的延时
     /// </summary>
     public int DelayTime;
     /// <summary>

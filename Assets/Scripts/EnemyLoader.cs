@@ -11,6 +11,8 @@ public class EnemyLoader : MonoBehaviour
 
     void Awake()
     {
+        //加载configs
+
         GameObject enemy = Resources.Load<GameObject>("Prefabs/Enemy");
         pool = GameObjectPoolManager.Instance.CreatGameObjectPool<BasePool>("Prefabs/Enemy", enemy);
 
@@ -35,11 +37,12 @@ public class EnemyLoader : MonoBehaviour
     }
 
     float _timer = 0;
+    int enemyCount = 0;
 
     void FixedUpdate()
     {
         _timer += Time.fixedDeltaTime;
-        if (_timer >= 1)
+        if (_timer >= 0.2 && enemyCount <= 20) 
         {
             GameObject go = pool.Get(new Vector3(10, 20, 0), 0); // 
             YaoJing1 yaoJing = go.GetComponent<YaoJing1>();
@@ -48,6 +51,7 @@ public class EnemyLoader : MonoBehaviour
             yaoJing.FireCD = 0.5f;
 
             _timer = 0;
+            enemyCount++;
         }
     }
 }
