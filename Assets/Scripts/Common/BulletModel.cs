@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 子弹详细信息
 /// </summary>
+[System.Serializable]
 public class BulletModel
 {
     /// <summary>

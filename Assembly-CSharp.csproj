@@ -70,6 +70,7 @@
     <Compile Include="Assets\Scripts\Common\BulletModel.cs" />
     <Compile Include="Assets\Scripts\Common\EnemyFireModel.cs" />
     <Compile Include="Assets\Scripts\Common\EnemyModel.cs" />
+    <Compile Include="Assets\Scripts\CommonDatas.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemyController.cs" />
     <Compile Include="Assets\Scripts\Enemy\EnemySpell.cs" />
     <Compile Include="Assets\Scripts\Enemy\YaoJing1.cs" />

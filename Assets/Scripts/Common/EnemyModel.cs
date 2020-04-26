@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// 小怪类型
 /// </summary>
+[System.Serializable]
 public class EnemyModel
 {
     /// <summary>
@@ -27,4 +28,11 @@ public class EnemyModel
     /// 移动速度变化
     /// </summary>
     public AnimationCurve MoveSpeedCurve;
+}
+
+[System.Serializable]
+public class  EnemyModel4Json
+{
+    public string Name => "SB_UNITY";
+    public List<EnemyModel> Enemies;
 }
